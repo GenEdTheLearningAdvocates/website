@@ -1,12 +1,13 @@
 // ========================================
 // GenEd The Learning Advocates
-// Global JavaScript - Used across all pages
+// Leadership Page Complete JavaScript (Standalone)
+// No dependencies - Fully independent
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
   
   // ========================================
-  // Mobile Menu Toggle
+  // MOBILE MENU TOGGLE
   // ========================================
   const menuToggle = document.querySelector('.menu-toggle');
   const navMenu = document.querySelector('.nav-menu');
@@ -18,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
     
-    // Close menu when clicking nav links
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
       link.addEventListener('click', function() {
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Close menu when clicking outside
     document.addEventListener('click', function(e) {
       if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
         menuToggle.classList.remove('active');
@@ -39,38 +38,33 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // ========================================
-  // Active Menu Highlighting
+  // ACTIVE MENU HIGHLIGHTING
   // ========================================
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  const navLinks = document.querySelectorAll('.nav-link');
+  const allNavLinks = document.querySelectorAll('.nav-link');
   
-  navLinks.forEach(link => {
+  allNavLinks.forEach(link => {
     const linkPage = link.getAttribute('href');
-    if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+    if (linkPage === currentPage || (currentPage === 'leadership.html' && linkPage === 'leadership.html')) {
       link.classList.add('active');
     }
   });
   
   // ========================================
-  // Sticky Header on Scroll
+  // STICKY HEADER ON SCROLL
   // ========================================
   const header = document.querySelector('.header');
-  let lastScroll = 0;
   
   window.addEventListener('scroll', function() {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 50) {
+    if (window.pageYOffset > 50) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
-    
-    lastScroll = currentScroll;
   });
   
   // ========================================
-  // Smooth Scroll for Anchor Links
+  // SMOOTH SCROLL FOR ANCHOR LINKS
   // ========================================
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -95,97 +89,88 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // ========================================
-  // Scroll Reveal Animation
+  // SCROLL REVEAL ANIMATIONS
   // ========================================
-  const revealElements = document.querySelectorAll('.fade-in');
+  const revealElements = document.querySelectorAll('.fade-in, .leader-card-large, .member-card, .advisor-card');
   
   function revealOnScroll() {
     const windowHeight = window.innerHeight;
     const revealPoint = 100;
     
-    revealElements.forEach(element => {
+    revealElements.forEach((element, index) => {
       const elementTop = element.getBoundingClientRect().top;
       
       if (elementTop < windowHeight - revealPoint) {
-        element.classList.add('visible');
+        if (!element.classList.contains('visible')) {
+          setTimeout(() => {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+            element.classList.add('visible');
+          }, index * 50);
+        }
       }
     });
   }
+  
+  revealElements.forEach(element => {
+    if (!element.style.opacity) {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    }
+  });
   
   if (revealElements.length > 0) {
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Check on load
+    window.addEventListener('scroll', debounce(revealOnScroll, 50));
+    revealOnScroll();
   }
   
   // ========================================
-  // Scroll to Top Button (Optional)
+  // MEMBER CARD HOVER EFFECTS
   // ========================================
-  const scrollTopBtn = document.querySelector('.scroll-to-top');
+  const memberCards = document.querySelectorAll('.member-card, .leader-card-large, .advisor-card');
   
-  if (scrollTopBtn) {
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 300) {
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.remove('visible');
-      }
+  memberCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-8px) scale(1.01)';
     });
     
-    scrollTopBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
     });
-  }
+  });
   
   // ========================================
-  // Form Validation Helper (for future use)
+  // SOCIAL ICON ANIMATIONS
   // ========================================
-  window.validateEmail = function(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
+  const socialIcons = document.querySelectorAll('.social-icon, .contact-link');
   
-  window.validatePhone = function(phone) {
-    const re = /^[\d\s\-\+\(\)]+$/;
-    return re.test(phone);
-  };
-  
-  // ========================================
-  // Lazy Loading Images (Optional)
-  // ========================================
-  const lazyImages = document.querySelectorAll('img[data-src]');
-  
-  if ('IntersectionObserver' in window && lazyImages.length > 0) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-          observer.unobserve(img);
-        }
-      });
+  socialIcons.forEach(icon => {
+    icon.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-3px) scale(1.1)';
     });
     
-    lazyImages.forEach(img => imageObserver.observe(img));
-  }
+    icon.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
   
   // ========================================
-  // Console Message (Optional - can remove)
+  // PAGE LOAD COMPLETE
   // ========================================
-  console.log('%cGenEd The Learning Advocates', 'font-size: 20px; font-weight: bold; color: #1e40af;');
-  console.log('%cWebsite by GenEd Tech Team', 'font-size: 12px; color: #059669;');
+  window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+    
+    setTimeout(() => {
+      revealOnScroll();
+    }, 100);
+  });
   
 });
 
 // ========================================
-// Utility Functions
+// UTILITY: DEBOUNCE FUNCTION
 // ========================================
-
-// Debounce function for performance
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
@@ -196,23 +181,4 @@ function debounce(func, wait) {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-}
-
-// Get viewport dimensions
-function getViewport() {
-  return {
-    width: window.innerWidth || document.documentElement.clientWidth,
-    height: window.innerHeight || document.documentElement.clientHeight
-  };
-}
-
-// Check if element is in viewport
-function isInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
 }
