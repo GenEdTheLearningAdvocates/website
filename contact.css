@@ -587,7 +587,7 @@ img {
 }
 
 /* ========================================
-   FOOTER (SAME AS HOME)
+   FOOTER
    ======================================== */
 
 .footer {
@@ -695,6 +695,23 @@ img {
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.875rem;
   margin: 0;
+}
+
+/* Developer Branding */
+.developer-credit {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.developer-credit a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.developer-credit a:hover {
+  text-decoration: underline;
 }
 
 /* ========================================
