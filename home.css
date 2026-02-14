@@ -634,7 +634,7 @@ img {
 
 .leader-image {
   width: 100%;
-  height: 250px;
+  height: 320px; /* INCREASED TO 320px for Portrait Look */
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #e5e7eb, #d1d5db);
@@ -675,17 +675,18 @@ img {
 }
 
 /* ========================================
-   STATS SECTION
+   ADVISORY BOARD SECTION
+   (Replaces Stats Section)
    ======================================== */
 
-.stats-section {
+.advisory-section {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: var(--white);
   position: relative;
   overflow: hidden;
 }
 
-.stats-section::before {
+.advisory-section::before {
   content: '';
   position: absolute;
   top: 0;
@@ -696,50 +697,88 @@ img {
   background-size: 100px 100px;
 }
 
-.stats-container {
+.advisory-container {
   position: relative;
   z-index: 1;
 }
 
-.stats-grid {
+.advisory-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns for portrait cards */
+  gap: 2rem;
   margin-top: 3rem;
 }
 
-.stat-box {
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
-.stat-box .stat-number {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: var(--white);
-  font-family: var(--font-heading);
-  margin-bottom: 0.5rem;
+.advisor-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
+  flex-direction: column;
 }
 
-.stat-box .stat-number .suffix {
-  font-size: 2rem;
-  color: var(--accent-color);
+.advisor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
-.stat-box .stat-label {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+.advisor-image {
+  width: 100%;
+  height: 320px; /* Portrait aspect */
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
 }
 
-.stat-box .stat-description {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 0.5rem;
+.advisor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.advisor-card:hover .advisor-image img {
+  transform: scale(1.1);
+}
+
+.advisor-info {
+  padding: 1.5rem;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.advisor-role {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-dark);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.advisor-name {
+  font-size: 1.1rem;
+  font-family: var(--font-heading);
+  color: var(--dark);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.advisor-desig {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.advisor-spec {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
 /* ========================================
@@ -1062,8 +1101,7 @@ img {
   :root { --container-padding: 1.5rem; }
   h1 { font-size: 2.5rem; }
   h2 { font-size: 2rem; }
-  .activities-grid, .leadership-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .activities-grid, .leadership-grid, .advisory-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -1090,13 +1128,12 @@ img {
   .hero h1 { font-size: 2.5rem; }
   .hero-subtitle { font-size: 1.125rem; }
   .about-content { grid-template-columns: 1fr; gap: 2rem; }
-  .activities-grid, .events-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .activities-grid, .events-grid, .advisory-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
   h1 { font-size: 1.75rem; }
   .hero h1 { font-size: 2rem; }
-  .leadership-grid { grid-template-columns: 1fr; }
+  .leadership-grid, .advisory-grid { grid-template-columns: 1fr; }
   .cta-content h2 { font-size: 2rem; }
 }

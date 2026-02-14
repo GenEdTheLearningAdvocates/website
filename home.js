@@ -91,60 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // ========================================
-  // STATS COUNTER ANIMATION
-  // ========================================
-  const stats = document.querySelectorAll('.stat-number');
-  let hasAnimated = false;
-  
-  function animateCounter(element, target, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    
-    const timer = setInterval(() => {
-      current += increment;
-      
-      if (current >= target) {
-        element.textContent = target;
-        clearInterval(timer);
-      } else {
-        element.textContent = Math.floor(current);
-      }
-    }, 16);
-  }
-  
-  function checkStatsVisibility() {
-    const statsSection = document.querySelector('.stats-section');
-    
-    if (!statsSection || hasAnimated) return;
-    
-    const rect = statsSection.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    if (rect.top < windowHeight * 0.75) {
-      hasAnimated = true;
-      
-      stats.forEach(stat => {
-        const targetText = stat.textContent.replace(/\+/g, '');
-        const target = parseInt(targetText);
-        
-        if (!isNaN(target)) {
-          stat.textContent = '0';
-          animateCounter(stat, target);
-        }
-      });
-    }
-  }
-  
-  if (stats.length > 0) {
-    window.addEventListener('scroll', checkStatsVisibility);
-    checkStatsVisibility(); // Check on load
-  }
-  
-  // ========================================
   // SCROLL REVEAL ANIMATIONS
+  // Updated to include .advisor-card
   // ========================================
-  const revealElements = document.querySelectorAll('.activity-card, .leader-card, .event-card, .fade-in');
+  const revealElements = document.querySelectorAll('.activity-card, .leader-card, .event-card, .advisor-card, .fade-in');
   
   function revealOnScroll() {
     const windowHeight = window.innerHeight;
@@ -180,12 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // ========================================
-  // ACTIVITY CARDS HOVER ENHANCEMENT
+  // ACTIVITY & ADVISOR CARDS HOVER ENHANCEMENT
   // ========================================
-  const activityCards = document.querySelectorAll('.activity-card');
+  const interactiveCards = document.querySelectorAll('.activity-card, .advisor-card');
   
-  activityCards.forEach(card => {
+  interactiveCards.forEach(card => {
     card.addEventListener('mouseenter', function() {
+      // Standard hover effect for all cards (including white advisory cards)
       this.style.transform = 'translateY(-8px) scale(1.02)';
     });
     
@@ -253,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setTimeout(() => {
       revealOnScroll();
-      checkStatsVisibility();
     }, 100);
   });
   
